@@ -4,7 +4,7 @@
 
 Write a class named `Account` that implements the following public interface:
 
-```injectablephp
+```php
 interface AccountService
 {
     public function deposit(int amount) {};
