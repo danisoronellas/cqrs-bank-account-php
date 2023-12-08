@@ -1,50 +1,36 @@
-<h1 align="center"><a href="https://api-platform.com"><img src="https://api-platform.com/images/logos/Logo_Circle%20webby%20text%20blue.png" alt="API Platform" width="250" height="250"></a></h1>
+# Bank Account Kata
 
-API Platform is a next-generation web framework designed to easily create API-first projects without compromising extensibility
-and flexibility:
+### Instructions
 
-* Design your own data model as plain old PHP classes or [**import an existing ontology**](https://api-platform.com/docs/schema-generator).
-* **Expose in minutes a hypermedia REST or a GraphQL API** with pagination, data validation, access control, relation embedding,
-  filters, and error handling...
-* Benefit from Content Negotiation: [GraphQL](https://api-platform.com/docs/core/graphql/), [JSON-LD](https://json-ld.org), [Hydra](https://hydra-cg.com),
-  [HAL](https://github.com/mikekelly/hal_specification/blob/master/hal_specification.md), [JSON:API](https://jsonapi.org/), [YAML](https://yaml.org/), [JSON](https://www.json.org/), [XML](https://www.w3.org/XML/) and [CSV](https://www.ietf.org/rfc/rfc4180.txt) are supported out of the box.
-* Enjoy the **beautiful automatically generated API documentation** ([OpenAPI](https://api-platform.com/docs/core/openapi/)).
-* Add [**a convenient Material Design administration interface**](https://api-platform.com/docs/admin) built with [React](https://reactjs.org/)
-  without writing a line of code.
-* **Scaffold fully functional Progressive-Web-Apps and mobile apps** built with [Next.js](https://api-platform.com/docs/client-generator/nextjs/) (React),
-[Nuxt.js](https://api-platform.com/docs/client-generator/nuxtjs/) (Vue.js) or [React Native](https://api-platform.com/docs/client-generator/react-native/)
-thanks to [the client generator](https://api-platform.com/docs/client-generator/) (a Vue.js generator is also available).
-* Install a development environment and deploy your project in production using **[Docker](https://api-platform.com/docs/distribution)**
-and [Kubernetes](https://api-platform.com/docs/deployment/kubernetes).
-* Easily add **[OAuth](https://oauth.net/) authentication**.
-* Create specs and tests with **[a developer friendly API testing tool](https://api-platform.com/docs/distribution/testing/)**.
+Write a class named `Account` that implements the following public interface:
 
-[![GitHub Actions](https://github.com/api-platform/core/workflows/CI/badge.svg)](https://github.com/api-platform/core/actions?workflow=CI)
-[![Codecov](https://codecov.io/gh/api-platform/core/branch/master/graph/badge.svg)](https://codecov.io/gh/api-platform/core/branch/master)
+```injectablephp
+interface AccountService
+{
+    public function deposit(int amount) {};
+    public function withdraw(int amount) {};
+    public function printStatement();
+}
+```
 
-The official project documentation is available **[on the API Platform website](https://api-platform.com)**.
+### Desired Behaviour
+Here's the specification for an acceptance test that expresses the desired behaviour for this
 
-API Platform embraces open web standards and the
-[Linked Data](https://www.w3.org/standards/semanticweb/data) movement. Your API will automatically expose structured data.
-It means that your API Platform application is usable **out of the box** with technologies of
-the semantic web.
+    Given a client makes a deposit of 1000 on 10-01-2012
+    And a deposit of 2000 on 13-01-2012
+    And a withdrawal of 500 on 14-01-2012
+    When they print their bank statement
+    Then they would see:
 
-It also means that **your SEO will be improved** because **[Google leverages these formats](https://developers.google.com/search/docs/guides/intro-structured-data)**.
+```
+Date       || Amount || Balance
+14/01/2012 || -500   || 2500
+13/01/2012 || 2000   || 3000
+10/01/2012 || 1000   || 1000
+```
 
-Last but not least, the server component of API Platform is built on top of the [Symfony](https://symfony.com) framework,
-while client components leverage [React](https://reactjs.org/) ([Vue.js](https://vuejs.org/) flavors are also available).
-It means that you can:
-
-* Use **thousands of Symfony bundles and React components** with API Platform.
-* Integrate API Platform in **any existing Symfony, React, or Vue application**.
-* Reuse **all your Symfony and JavaScript skills**, and benefit from the incredible amount of documentation available.
-* Enjoy the popular [Doctrine ORM](https://www.doctrine-project.org/projects/orm.html) (used by default, but fully optional:
-  you can use the data provider you want, including but not limited to MongoDB and Elasticsearch)
-
-## Install
-
-[Read the official "Getting Started" guide](https://api-platform.com/docs/distribution).
-
-## Credits
-
-Created by [Kévin Dunglas](https://dunglas.fr). Commercial support is available at [Les-Tilleuls.coop](https://les-tilleuls.coop).
+### Notes
+ - We're using ints for the money amounts to keep the auxiliaries as simple as possible. In a real system, we would always use a datatype with guaranteed arbitrary precision, but doing so here would distract from the main purpose of the exercise.
+ - Don't worry about spacing and indentation in the statement output. (You could instruct your acceptance test to ignore whitespace if you wanted to.)
+ - Use the acceptance test to guide your progress towards the solution. Sandro does this by making all unimplemented methods throw an exception, so that he can immediately see what remains to be implemented when he runs the acceptance test.
+ - When in doubt, go for the simplest solution!
